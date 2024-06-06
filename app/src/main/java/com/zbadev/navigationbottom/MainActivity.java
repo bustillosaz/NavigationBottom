@@ -87,17 +87,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itenId=item.getItemId();
         if(itenId == R.id.nav_trending){
             openFragment(new TrendingFragment());
+            clearBottomNavigationSelection();
         }else if(itenId == R.id.nav_music){
             openFragment(new MusicFragment());
+            clearBottomNavigationSelection();
         }else if(itenId == R.id.nav_gaming){
             openFragment(new GamingFragment());
+            clearBottomNavigationSelection();
         }else if(itenId == R.id.nav_movies){
             Toast.makeText(this, "Movies", Toast.LENGTH_SHORT).show();
         } else if(itenId == R.id.nav_news){
             Toast.makeText(this, "News", Toast.LENGTH_SHORT).show();
         }else if(itenId == R.id.nav_sports){
             Toast.makeText(this, "Sports", Toast.LENGTH_SHORT).show();
+        }else if(itenId == R.id.nav_logout){
+            Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
         }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -114,6 +120,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void openFragment(Fragment fragment){
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    // Método para deseleccionar todos los ítems del BottomNavigationView
+    private void clearBottomNavigationSelection() {
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, false);
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
+            bottomNavigationView.getMenu().getItem(i).setChecked(false);
+        }
+        bottomNavigationView.getMenu().setGroupCheckable(0, true, true);
+    }
+
 }
